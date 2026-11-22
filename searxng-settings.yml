@@ -1,0 +1,48 @@
+# Custom settings for the myorigins search-supply proxy (Render free tier).
+# Inherit the stock engine set, then adjust only what this deployment needs.
+use_default_settings: true
+
+general:
+  instance_name: "myorigins searxng"
+
+search:
+  safe_search: 0
+  autocomplete: ""
+  default_lang: "sv"
+  formats:
+    - html
+    - json
+
+server:
+  secret_key: "sg7KrqV2Lx9mNb4Tq0WzAe8Hf1YdPc6U"
+  limiter: false
+  image_proxy: false
+
+outgoing:
+  request_timeout: 4.0
+  max_request_timeout: 10.0
+  pool_connections: 20
+  pool_maxsize: 10
+
+# google cse trips "unusual traffic" rate limits from datacenter IPs (Render
+# egress, observed 2026-11-22) and DDG timed out on the stock 0.1-CPU box.
+# Keep DDG (it may recover), add bot-tolerant engines, drop google cse.
+engines:
+  - name: google cse
+    disabled: true
+  - name: google
+    disabled: true
+  - name: bing
+    disabled: false
+  - name: duckduckgo
+    disabled: false
+  - name: wikipedia
+    disabled: false
+  - name: mojeek
+    disabled: false
+  - name: marginalia
+    disabled: false
+  - name: brave
+    disabled: false
+  - name: startpage
+    disabled: false
