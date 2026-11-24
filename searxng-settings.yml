@@ -28,21 +28,28 @@ outgoing:
 # egress, observed 2026-11-22) and DDG timed out on the stock 0.1-CPU box.
 # Keep DDG (it may recover), add bot-tolerant engines, drop google cse.
 engines:
+  # Enabled: engines verified to return results from the Render shared egress IP
+  # (live probes 2026-11-24 ~08:40 CET, forced-engine tests): yahoo (10 results),
+  # seznam (10), mwmbl (1); brave yields but suspends after ~1 query
+  # ("too many requests" from datacenter IP); duckduckgo kept (may recover).
+  # Disabled: google / google cse (unusual-traffic CAPTCHA), bing (bot-walled,
+  # returns clean-empty), qwant (access denied).
+  # Removed: mojeek / marginalia / startpage / wikipedia entries - on the deployed
+  # image these names do not register (absent from /config engine registry, forced
+  # engine probes never ran them), so listing them appended broken definitions.
   - name: google cse
     disabled: true
   - name: google
     disabled: true
   - name: bing
-    disabled: false
+    disabled: true
   - name: duckduckgo
-    disabled: false
-  - name: wikipedia
-    disabled: false
-  - name: mojeek
-    disabled: false
-  - name: marginalia
     disabled: false
   - name: brave
     disabled: false
-  - name: startpage
+  - name: yahoo
+    disabled: false
+  - name: seznam
+    disabled: false
+  - name: mwmbl
     disabled: false
